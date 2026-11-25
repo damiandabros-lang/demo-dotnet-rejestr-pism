@@ -1,6 +1,7 @@
 # DEMO Isvero Studio – rejestr pism: ASP.NET Core 8 + MS SQL Server 2022.
 # Osobna aplikacja Coolify. Domenę przypisz TYLKO do usługi "web" (port 8080).
-# Sekrety (SA_PASSWORD, DEMO_PASSWORD) ustaw jako zmienne w Coolify – nie w repo.
+# Hasła generuje Coolify (SERVICE_PASSWORD_SA, SERVICE_PASSWORD_DEMO); lokalnie ustaw je przed `docker compose up`.
+# Na serwerze z mniej niż ~2,5 GB wolnej pamięci użyj docker-compose.lekki.yml (SQLite).
 services:
   web:
     build: .
@@ -10,8 +11,8 @@ services:
         condition: service_healthy
     environment:
       ASPNETCORE_ENVIRONMENT: Production
-      ConnectionStrings__SqlServer: "Server=mssql,1433;Database=RejestrPism;User Id=sa;Password=${SA_PASSWORD:?ustaw SA_PASSWORD};TrustServerCertificate=True;Encrypt=True"
-      Demo__Password: ${DEMO_PASSWORD:?ustaw DEMO_PASSWORD}
+      ConnectionStrings__SqlServer: "Server=mssql,1433;Database=RejestrPism;User Id=sa;Password=${SERVICE_PASSWORD_SA};TrustServerCertificate=True;Encrypt=True"
+      Demo__Password: ${SERVICE_PASSWORD_DEMO}
     expose:
       - "8080"
     deploy:
@@ -25,7 +26,7 @@ services:
     environment:
       ACCEPT_EULA: "Y"
       MSSQL_PID: Express
-      MSSQL_SA_PASSWORD: ${SA_PASSWORD:?ustaw SA_PASSWORD}
+      MSSQL_SA_PASSWORD: ${SERVICE_PASSWORD_SA}
       MSSQL_MEMORY_LIMIT_MB: "1536"
     volumes:
       - mssql_data:/var/opt/mssql

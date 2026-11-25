@@ -1,0 +1,22 @@
+# DEMO Isvero Studio – rejestr pism, wariant lekki: ASP.NET Core 8 + SQLite (ok. 150 MB RAM).
+# Ten sam kod co wariant z MS SQL Server (docker-compose.yml); dostawcę bazy wybiera konfiguracja.
+# Osobna aplikacja Coolify. Domenę przypisz usłudze "web" (port 8080). Hasło kont demo generuje Coolify.
+services:
+  web:
+    build: .
+    restart: unless-stopped
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__Sqlite: "Data Source=/data/rejestr.db"
+      Demo__Password: ${SERVICE_PASSWORD_DEMO}
+    volumes:
+      - rejestr_data:/data
+    expose:
+      - "8080"
+    deploy:
+      resources:
+        limits: { memory: 384M, cpus: "1.0" }
+    logging: { driver: json-file, options: { max-size: "10m", max-file: "3" } }
+
+volumes:
+  rejestr_data:

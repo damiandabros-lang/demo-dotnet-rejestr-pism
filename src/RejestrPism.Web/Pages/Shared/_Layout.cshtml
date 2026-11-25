@@ -34,6 +34,6 @@
 <main id="tresc" class="wrap" tabindex="-1">
     @RenderBody()
 </main>
-<footer class="site-footer"><div class="wrap"><p>DEMO portfolio Isvero Studio, 2026 · ASP.NET Core 8, EF Core, MS SQL Server · Nie jest to referencja ani wdrożenie dla klienta.</p></div></footer>
+<footer class="site-footer"><div class="wrap"><p>DEMO portfolio Isvero Studio, 2026 · ASP.NET Core 8, EF Core, @(Baza.Database.IsSqlServer() ? "MS SQL Server" : "SQLite (wariant lekki; w repozytorium także MS SQL Server)") · Nie jest to referencja ani wdrożenie dla klienta.</p></div></footer>
 </body>
 </html>

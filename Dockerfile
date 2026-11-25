@@ -12,6 +12,8 @@ WORKDIR /app
 COPY --from=build /app .
 ENV ASPNETCORE_URLS=http://+:8080 DOTNET_RUNNING_IN_CONTAINER=true
 EXPOSE 8080
+# Katalog na bazę SQLite w wariancie lekkim (docker-compose.lekki.yml)
+RUN mkdir -p /data && chown app /data
 USER app
 HEALTHCHECK NONE
 ENTRYPOINT ["dotnet", "RejestrPism.Web.dll"]

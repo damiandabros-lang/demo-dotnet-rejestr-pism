@@ -21,10 +21,12 @@ C# 12, .NET 8, ASP.NET Core (Razor Pages + Minimal API), Entity Framework Core 8
 # lokalnie bez SQL Server (SQLite):
 Demo__Password='Haslo-Demo-123!' dotnet run --project src/RejestrPism.Web
 # z MS SQL Server:
-SA_PASSWORD='Silne-Haslo-2026!' DEMO_PASSWORD='Haslo-Demo-123!' docker compose up --build
+SERVICE_PASSWORD_SA='Silne-Haslo-2026!' SERVICE_PASSWORD_DEMO='Haslo-Demo-123!' docker compose up --build
+# wariant lekki bez MS SQL (SQLite, ok. 150 MB RAM):
+SERVICE_PASSWORD_DEMO='Haslo-Demo-123!' docker compose -f docker-compose.lekki.yml up --build
 dotnet test
 ```
-Konta demo: `kancelaria@demo.example`, `pracownik@demo.example` (hasło z `DEMO_PASSWORD`).
+Konta demo: `kancelaria@demo.example`, `pracownik@demo.example` (hasło z `SERVICE_PASSWORD_DEMO`; w Coolify generowane automatycznie).
 
 ## API (przykład)
 ```

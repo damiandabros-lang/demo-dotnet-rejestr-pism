@@ -1,1 +1,1 @@
-{"name":"demo-dotnet-rejestr-pism","subdomain":"demo-rejestr","web_service":"web","port":8080,"compose":"/docker-compose.yml","check_path":"/","env":{},"generate_secrets":["SA_PASSWORD","DEMO_PASSWORD"]}
+{"name":"demo-dotnet-rejestr-pism","subdomain":"demo-rejestr","web_service":"web","port":8080,"compose":"/docker-compose.yml","check_path":"/","env":{},"generate_secrets":[]}

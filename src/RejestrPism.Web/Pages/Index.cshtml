@@ -17,7 +17,14 @@ else { <p><a class="btn" href="/Pisma">Przejdź do rejestru</a></p> }
 <h2>Technologia</h2>
 <ul>
     <li>ASP.NET Core 8 (Razor Pages + Minimal API), C# 12</li>
-    <li>Entity Framework Core 8 z migracjami, Microsoft SQL Server 2022</li>
+    @if (Baza.Database.IsSqlServer())
+    {
+        <li>Entity Framework Core 8 z migracjami, Microsoft SQL Server 2022</li>
+    }
+    else
+    {
+        <li>Entity Framework Core 8 z migracjami pod Microsoft SQL Server 2022 (ta instancja demo działa na SQLite, żeby zmieścić się na małym serwerze; pełny wariant z MS SQL jest w repozytorium)</li>
+    }
     <li>ASP.NET Core Identity: logowanie, role, blokada po 5 nieudanych próbach</li>
     <li>OpenAPI/Swagger, health check <code>/health</code>, nagłówki bezpieczeństwa, CSP</li>
     <li>xUnit + WebApplicationFactory (testy integracyjne), GitHub Actions, Docker, Coolify</li>
