@@ -17,6 +17,8 @@ builder.Services.AddDbContext<AppDb>(o =>
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(o =>
     {
         o.Password.RequiredLength = 12;
+        // Hasła generowane przez Coolify są alfanumeryczne (16+ znaków), więc nie wymagamy znaku specjalnego.
+        o.Password.RequireNonAlphanumeric = false;
         o.Lockout.MaxFailedAccessAttempts = 5;
         o.User.RequireUniqueEmail = true;
     })
