@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="DEMO Isvero Studio: rejestr korespondencji (ASP.NET Core, EF Core, MS SQL Server). Dane fikcyjne." />
+    <title>@ViewData["Title"] – Rejestr pism (DEMO)</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+<a class="skip-link" href="#tresc">Przejdź do treści</a>
+<div class="demo-bar" role="region" aria-label="Informacja o wersji demonstracyjnej">
+    <p><span class="demo-badge">DEMO</span>Projekt pokazowy <a href="https://isverostudio.com/">Isvero Studio</a> (2026). Nie jest to system żadnej instytucji, a wszystkie dane są fikcyjne.</p>
+</div>
+<header class="site-header">
+    <div class="wrap">
+        <a class="brand" href="/">Rejestr pism <span>Urząd Gminy Przykładowo – demo</span></a>
+        <nav aria-label="Menu główne">
+            <ul>
+                <li><a href="/">Start</a></li>
+                <li><a href="/Pisma">Rejestr</a></li>
+                @if (User.IsInRole("Kancelaria")) { <li><a href="/Pisma/Nowe">Zarejestruj pismo</a></li> }
+                <li><a href="/swagger">API</a></li>
+                <li><a href="/Dostepnosc">Dostępność</a></li>
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <li><form method="post" action="/Konto/Wyloguj"><button type="submit" class="linklike">Wyloguj (@User.Identity.Name)</button></form></li>
+                }
+                else { <li><a href="/Konto/Logowanie">Zaloguj</a></li> }
+            </ul>
+        </nav>
+    </div>
+</header>
+<main id="tresc" class="wrap" tabindex="-1">
+    @RenderBody()
+</main>
+<footer class="site-footer"><div class="wrap"><p>DEMO portfolio Isvero Studio, 2026 · ASP.NET Core 8, EF Core, MS SQL Server · Nie jest to referencja ani wdrożenie dla klienta.</p></div></footer>
+</body>
+</html>

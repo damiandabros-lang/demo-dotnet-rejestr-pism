@@ -1,0 +1,12 @@
+@page
+@model RejestrPism.Web.Pages.Konto.LogowanieModel
+@{ ViewData["Title"] = "Logowanie"; }
+<h1>Logowanie</h1>
+@if (Model.Blad is not null) { <div class="error-summary" role="alert"><p>@Model.Blad</p></div> }
+<form method="post" novalidate>
+    <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
+    <div class="field"><label for="email">Adres e-mail</label><input id="email" name="email" type="email" autocomplete="username" required value="@Model.Email" /></div>
+    <div class="field"><label for="haslo">Hasło</label><input id="haslo" name="haslo" type="password" autocomplete="current-password" required /></div>
+    <button class="btn" type="submit">Zaloguj</button>
+</form>
+<p class="hint">Konta demo: kancelaria@demo.example, pracownik@demo.example. Po 5 nieudanych próbach konto jest blokowane na 5 minut.</p>

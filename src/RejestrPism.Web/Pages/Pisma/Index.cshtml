@@ -1,0 +1,48 @@
+@page
+@model RejestrPism.Web.Pages.Pisma.IndexModel
+@{ ViewData["Title"] = "Rejestr"; }
+<h1>Rejestr pism</h1>
+<form method="get" class="filters" role="search" aria-label="Filtry rejestru">
+    <div class="field"><label for="q">Szukaj (numer, nadawca, przedmiot, znak sprawy)</label><input id="q" name="q" type="search" value="@Model.Q" /></div>
+    <div class="field"><label for="kierunek">Kierunek</label>
+        <select id="kierunek" name="kierunek"><option value="">Wszystkie</option>
+            @foreach (var k in Enum.GetValues<Kierunek>()) { <option value="@k" selected="@(Model.Kierunek == k)">@k.Nazwa()</option> }
+        </select></div>
+    <div class="field"><label for="status">Status</label>
+        <select id="status" name="status"><option value="">Wszystkie</option>
+            @foreach (var s in Enum.GetValues<StatusPisma>()) { <option value="@s" selected="@(Model.Status == s)">@s.Nazwa()</option> }
+        </select></div>
+    <button class="btn" type="submit">Filtruj</button>
+</form>
+<p role="status">Znaleziono: @Model.Razem</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Tabela pism – na małym ekranie przewiń w poziomie">
+<table>
+    <caption>Pisma, strona @Model.Strona z @Model.Stron</caption>
+    <thead><tr><th scope="col">Numer</th><th scope="col">Data</th><th scope="col">Kierunek</th><th scope="col">Nadawca / adresat</th><th scope="col">Przedmiot</th><th scope="col">Znak sprawy</th><th scope="col">Status</th><th scope="col">Termin</th></tr></thead>
+    <tbody>
+    @foreach (var p in Model.Pozycje)
+    {
+        <tr>
+            <th scope="row"><a href="/Pisma/Szczegoly/@p.Id">@p.Numer</a></th>
+            <td>@p.DataPisma.ToString("yyyy-MM-dd")</td>
+            <td>@p.Kierunek.Nazwa()</td>
+            <td>@p.Kontrahent</td>
+            <td>@p.Przedmiot</td>
+            <td>@p.ZnakSprawy</td>
+            <td>@p.Status.Nazwa()</td>
+            <td>@p.Termin?.ToString("yyyy-MM-dd")</td>
+        </tr>
+    }
+    </tbody>
+</table>
+</div>
+@if (Model.Stron > 1)
+{
+    <nav aria-label="Stronicowanie" class="pagination">
+        @for (var i = 1; i <= Model.Stron; i++)
+        {
+            if (i == Model.Strona) { <span aria-current="page">@i</span> }
+            else { <a href="?q=@Model.Q&kierunek=@Model.Kierunek&status=@Model.Status&strona=@i">Strona @i</a> }
+        }
+    </nav>
+}

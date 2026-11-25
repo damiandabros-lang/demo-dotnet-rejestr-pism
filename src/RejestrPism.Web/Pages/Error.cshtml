@@ -1,0 +1,6 @@
+@page
+@model ErrorModel
+@{ ViewData["Title"] = "Błąd"; }
+<h1>Wystąpił błąd</h1>
+<p>Przepraszamy, nie udało się obsłużyć żądania. Spróbuj ponownie za chwilę.</p>
+@if (Model.ShowRequestId) { <p>Identyfikator żądania: <code>@Model.RequestId</code></p> }

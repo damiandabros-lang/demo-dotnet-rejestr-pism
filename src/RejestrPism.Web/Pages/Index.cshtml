@@ -1,0 +1,24 @@
+@page
+@model IndexModel
+@{ ViewData["Title"] = "Start"; }
+<h1>Rejestr korespondencji – wersja demonstracyjna</h1>
+<p>Przykład aplikacji dla administracji: rejestracja pism przychodzących i wychodzących z automatyczną numeracją kancelaryjną, znakami spraw JRWA, terminami, statusami i pełną historią zmian. Do tego REST API z dokumentacją OpenAPI, role użytkowników i testy automatyczne.</p>
+<ul class="stats" role="list">
+    <li><strong>@Model.Razem</strong> pism w rejestrze</li>
+    <li><strong>@Model.WRealizacji</strong> w realizacji</li>
+    <li><strong>@Model.PoTerminie</strong> po terminie</li>
+</ul>
+@if (User.Identity?.IsAuthenticated != true)
+{
+    <p><a class="btn" href="/Konto/Logowanie">Zaloguj się do demo</a></p>
+    <p class="hint">Konta demonstracyjne: <code>kancelaria@demo.example</code> (rejestracja pism) oraz <code>pracownik@demo.example</code> (podgląd i statusy). Hasło udostępnia Isvero Studio na prośbę.</p>
+}
+else { <p><a class="btn" href="/Pisma">Przejdź do rejestru</a></p> }
+<h2>Technologia</h2>
+<ul>
+    <li>ASP.NET Core 8 (Razor Pages + Minimal API), C# 12</li>
+    <li>Entity Framework Core 8 z migracjami, Microsoft SQL Server 2022</li>
+    <li>ASP.NET Core Identity: logowanie, role, blokada po 5 nieudanych próbach</li>
+    <li>OpenAPI/Swagger, health check <code>/health</code>, nagłówki bezpieczeństwa, CSP</li>
+    <li>xUnit + WebApplicationFactory (testy integracyjne), GitHub Actions, Docker, Coolify</li>
+</ul>

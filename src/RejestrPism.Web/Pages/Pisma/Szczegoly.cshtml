@@ -1,0 +1,24 @@
+@page "{id:int}"
+@model RejestrPism.Web.Pages.Pisma.SzczegolyModel
+@{ ViewData["Title"] = Model.Pismo.Numer; }
+@if (TempData["Info"] is string info) { <div class="notice" role="status">@info</div> }
+<h1>Pismo @Model.Pismo.Numer</h1>
+<dl class="details">
+    <dt>Kierunek</dt><dd>@Model.Pismo.Kierunek.Nazwa()</dd>
+    <dt>Nadawca / adresat</dt><dd>@Model.Pismo.Kontrahent</dd>
+    <dt>Przedmiot</dt><dd>@Model.Pismo.Przedmiot</dd>
+    <dt>Znak sprawy</dt><dd>@(Model.Pismo.ZnakSprawy ?? "—")</dd>
+    <dt>Komórka</dt><dd>@(Model.Pismo.Komorka ?? "—")</dd>
+    <dt>Data pisma</dt><dd>@Model.Pismo.DataPisma.ToString("yyyy-MM-dd")</dd>
+    <dt>Termin</dt><dd>@(Model.Pismo.Termin?.ToString("yyyy-MM-dd") ?? "—")</dd>
+    <dt>Status</dt><dd>@Model.Pismo.Status.Nazwa()</dd>
+</dl>
+<h2>Zmień status</h2>
+<form method="post" class="filters">
+    <div class="field"><label for="status">Nowy status</label>
+        <select id="status" name="status">@foreach (var s in Enum.GetValues<StatusPisma>()) { <option value="@s" selected="@(Model.Pismo.Status == s)">@s.Nazwa()</option> }</select></div>
+    <button class="btn" type="submit">Zapisz status</button>
+</form>
+<h2>Historia zmian</h2>
+<ol class="history">@foreach (var h in Model.Pismo.Historia.OrderBy(h => h.Kiedy)) { <li><time datetime="@h.Kiedy.ToString("o")">@h.Kiedy.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</time> – @h.Opis (<span>@h.Kto</span>)</li> }</ol>
+<p><a href="/Pisma">← Wróć do rejestru</a></p>
