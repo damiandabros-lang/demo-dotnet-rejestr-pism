@@ -14,6 +14,17 @@ public class RejestrTests : IClassFixture<AppFactory>
     private static readonly JsonSerializerOptions Json = new(JsonSerializerDefaults.Web) { Converters = { new JsonStringEnumConverter() } };
     public RejestrTests(AppFactory f) => _f = f;
 
+    [Fact]
+    public async Task Puste_logowanie_nie_wywoluje_proby_uwierzytelnienia()
+    {
+        // Brak SignInManager jest celowy: puste dane nie mogą do niego dotrzeć
+        // ani zwiększyć licznika nieudanych prób konta demonstracyjnego.
+        var model = new RejestrPism.Web.Pages.Konto.LogowanieModel(null!);
+        var result = await model.OnPostAsync("kancelaria@demo.example", "");
+        Assert.IsType<Microsoft.AspNetCore.Mvc.RazorPages.PageResult>(result);
+        Assert.Equal("Podaj adres e-mail i hasło do konta demonstracyjnego.", model.Blad);
+    }
+
     HttpClient Klient(string? user = null, string roles = "")
     {
         var c = _f.CreateClient(new() { AllowAutoRedirect = false });

@@ -15,6 +15,11 @@ public class LogowanieModel(SignInManager<IdentityUser> signIn) : PageModel
     public async Task<IActionResult> OnPostAsync(string email, string haslo)
     {
         Email = email;
+        if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(haslo))
+        {
+            Blad = "Podaj adres e-mail i hasło do konta demonstracyjnego.";
+            return Page();
+        }
         var r = await signIn.PasswordSignInAsync(email ?? "", haslo ?? "", isPersistent: false, lockoutOnFailure: true);
         if (r.Succeeded) return LocalRedirect(Url.IsLocalUrl(ReturnUrl) ? ReturnUrl! : "/Pisma");
         Blad = r.IsLockedOut ? "Konto zostało czasowo zablokowane po kilku nieudanych próbach." : "Nieprawidłowy e-mail lub hasło.";
