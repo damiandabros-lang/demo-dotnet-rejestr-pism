@@ -8,8 +8,11 @@ public static class Seed
 {
     public const string RolaKancelaria = "Kancelaria";
     public const string RolaPracownik = "Pracownik";
+    /// <summary>Publiczne konto tylko do podglądu (bez ról). Hasło jest jawne, bo konto niczego nie zmienia.</summary>
+    public const string GoscEmail = "gosc@demo.example";
+    public const string GoscHasloDomyslne = "Gosc-Demo-2026";
 
-    public static async Task RunAsync(IServiceProvider sp, string? demoPassword)
+    public static async Task RunAsync(IServiceProvider sp, string? demoPassword, string? goscPassword = GoscHasloDomyslne)
     {
         var db = sp.GetRequiredService<AppDb>();
         var roles = sp.GetRequiredService<RoleManager<IdentityRole>>();
@@ -21,6 +24,12 @@ public static class Seed
         {
             await Uzytkownik(users, "kancelaria@demo.example", demoPassword, RolaKancelaria, RolaPracownik);
             await Uzytkownik(users, "pracownik@demo.example", demoPassword, RolaPracownik);
+        }
+        if (!string.IsNullOrWhiteSpace(goscPassword))
+        {
+            await Uzytkownik(users, GoscEmail, goscPassword);
+            var g = await users.FindByEmailAsync(GoscEmail);
+            if (g is not null && g.LockoutEnabled) await users.SetLockoutEnabledAsync(g, false); // nikt nie zablokuje konta gościa
         }
 
         if (await db.Pisma.AnyAsync()) return;

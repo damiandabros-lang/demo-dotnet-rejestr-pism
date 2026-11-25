@@ -61,6 +61,14 @@ public class RejestrTests : IClassFixture<AppFactory>
     }
 
     [Fact]
+    public async Task Gosc_bez_roli_nie_zmienia_statusu()
+    {
+        var c = Klient("gosc@demo.example", "");
+        var r = await c.PostAsJsonAsync("/api/pisma/1/status", new { status = "Zalatwione" });
+        Assert.Equal(System.Net.HttpStatusCode.Forbidden, r.StatusCode);
+    }
+
+    [Fact]
     public async Task Api_bez_logowania_zwraca_401()
     {
         var r = await Klient().GetAsync("/api/pisma");

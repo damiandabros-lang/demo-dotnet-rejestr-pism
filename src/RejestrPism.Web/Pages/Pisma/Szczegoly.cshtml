@@ -13,12 +13,19 @@
     <dt>Termin</dt><dd>@(Model.Pismo.Termin?.ToString("yyyy-MM-dd") ?? "—")</dd>
     <dt>Status</dt><dd>@Model.Pismo.Status.Nazwa()</dd>
 </dl>
+@if (User.IsInRole(RejestrPism.Web.Services.Seed.RolaPracownik))
+{
 <h2>Zmień status</h2>
 <form method="post" class="filters">
     <div class="field"><label for="status">Nowy status</label>
         <select id="status" name="status">@foreach (var s in Enum.GetValues<StatusPisma>()) { <option value="@s" selected="@(Model.Pismo.Status == s)">@s.Nazwa()</option> }</select></div>
     <button class="btn" type="submit">Zapisz status</button>
 </form>
+}
+else
+{
+<p class="hint">Konto gościa służy tylko do podglądu – zmiana statusu wymaga roli Pracownik.</p>
+}
 <h2>Historia zmian</h2>
 <ol class="history">@foreach (var h in Model.Pismo.Historia.OrderBy(h => h.Kiedy)) { <li><time datetime="@h.Kiedy.ToString("o")">@h.Kiedy.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</time> – @h.Opis (<span>@h.Kto</span>)</li> }</ol>
 <p><a href="/Pisma">← Wróć do rejestru</a></p>

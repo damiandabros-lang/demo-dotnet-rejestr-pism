@@ -59,7 +59,7 @@ using (var scope = app.Services.CreateScope())
     if (db.Database.IsSqlServer()) await db.Database.MigrateAsync();
     else await db.Database.EnsureCreatedAsync();
     if (!app.Configuration.GetValue<bool>("Demo:SkipSeed"))
-        await Seed.RunAsync(scope.ServiceProvider, app.Configuration["Demo:Password"]);
+        await Seed.RunAsync(scope.ServiceProvider, app.Configuration["Demo:Password"], app.Configuration["Demo:GuestPassword"] ?? Seed.GoscHasloDomyslne);
 }
 
 app.UseForwardedHeaders();

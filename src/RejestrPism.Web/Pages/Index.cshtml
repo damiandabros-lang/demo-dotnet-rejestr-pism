@@ -11,7 +11,8 @@
 @if (User.Identity?.IsAuthenticated != true)
 {
     <p><a class="btn" href="/Konto/Logowanie">Zaloguj się do demo</a></p>
-    <p class="hint">Konta demonstracyjne: <code>kancelaria@demo.example</code> (rejestracja pism) oraz <code>pracownik@demo.example</code> (podgląd i statusy). Hasło udostępnia Isvero Studio na prośbę.</p>
+    <p class="hint">Konta demonstracyjne: <code>kancelaria@demo.example</code> (rejestracja pism) oraz <code>pracownik@demo.example</code> (podgląd i statusy) – hasło do nich udostępnia Isvero Studio na prośbę.</p>
+    <p class="hint"><strong>Podgląd bez pytania o hasło:</strong> konto gościa <code>gosc@demo.example</code>, hasło <code>Gosc-Demo-2026</code> (tylko odczyt).</p>
 }
 else { <p><a class="btn" href="/Pisma">Przejdź do rejestru</a></p> }
 <h2>Technologia</h2>

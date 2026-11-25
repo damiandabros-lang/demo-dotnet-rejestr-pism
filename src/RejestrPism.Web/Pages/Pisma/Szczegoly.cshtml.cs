@@ -19,6 +19,7 @@ public class SzczegolyModel(AppDb db, RejestrService svc) : PageModel
 
     public async Task<IActionResult> OnPostAsync(int id, StatusPisma status)
     {
+        if (!User.IsInRole(Seed.RolaPracownik)) return Forbid();
         if (await svc.ZmienStatusAsync(id, status, User.Identity!.Name!) is null) return NotFound();
         TempData["Info"] = "Zapisano status.";
         return RedirectToPage(new { id });

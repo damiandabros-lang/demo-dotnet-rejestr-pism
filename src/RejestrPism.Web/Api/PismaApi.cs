@@ -48,6 +48,6 @@ public static class PismaApi
 
         g.MapPost("/{id:int}/status", async (int id, ZmianaStatusuDto z, RejestrService svc, HttpContext ctx) =>
             await svc.ZmienStatusAsync(id, z.Status, ctx.User.Identity!.Name!) is { } p ? Results.Ok(Dto(p)) : Results.NotFound())
-         .WithSummary("Zmiana statusu pisma");
+         .RequireAuthorization(pol => pol.RequireRole(Seed.RolaPracownik)).WithSummary("Zmiana statusu pisma (rola Pracownik)");
     }
 }
