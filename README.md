@@ -2,6 +2,8 @@
 
 > **Projekt pokazowy (portfolio) Isvero Studio, listopad 2026 r.** Nie jest to system żadnej instytucji ani wdrożenie dla klienta. Wszystkie dane, osoby i urzędy są fikcyjne.
 
+**Demo na żywo:** https://demo-rejestr.isverostudio.com (noindex)
+
 Prosty „EZD-lite”: rejestr pism przychodzących i wychodzących dla urzędu.
 
 ## Funkcje
