@@ -1,6 +1,15 @@
 @page
 @model ErrorModel
-@{ ViewData["Title"] = "Błąd"; }
-<h1>Wystąpił błąd</h1>
-<p>Przepraszamy, nie udało się obsłużyć żądania. Spróbuj ponownie za chwilę.</p>
-@if (Model.ShowRequestId) { <p>Identyfikator żądania: <code>@Model.RequestId</code></p> }
+@{ ViewData["Title"] = Model.Kod == 404 ? "Nie znaleziono strony" : Model.Kod is 401 or 403 ? "Brak dostępu" : "Błąd"; }
+@if (Model.Kod == 404)
+{
+    <h1>Nie znaleziono strony</h1>
+    <p>Strona, której szukasz, nie istnieje lub została przeniesiona.</p>
+    <p><a href="/">Wróć na stronę główną rejestru</a></p>
+}
+else
+{
+    <h1>Wystąpił błąd</h1>
+    <p>Przepraszamy, nie udało się obsłużyć żądania. Spróbuj ponownie za chwilę.</p>
+    @if (Model.ShowRequestId) { <p>Identyfikator żądania: <code>@Model.RequestId</code></p> }
+}

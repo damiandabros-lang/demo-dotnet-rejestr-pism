@@ -108,4 +108,23 @@ public class RejestrTests : IClassFixture<AppFactory>
         var r = await Klient().GetAsync("/health");
         Assert.Equal(HttpStatusCode.OK, r.StatusCode);
     }
+
+    [Fact]
+    public async Task Brak_strony_daje_404_z_pelnym_ukladem()
+    {
+        var r = await Klient().GetAsync("/strona-ktorej-nie-ma");
+        Assert.Equal(HttpStatusCode.NotFound, r.StatusCode);
+        var html = await r.Content.ReadAsStringAsync();
+        Assert.Contains("lang=\"pl\"", html);
+        Assert.Contains("<title>Nie znaleziono strony", html);
+        Assert.Contains("DEMO", html);
+    }
+
+    [Fact]
+    public async Task Api_zwraca_sam_kod_404()
+    {
+        var r = await Klient("kancelaria@demo.example", "Kancelaria").GetAsync("/api/pisma/999999");
+        Assert.Equal(HttpStatusCode.NotFound, r.StatusCode);
+        Assert.DoesNotContain("<html", await r.Content.ReadAsStringAsync());
+    }
 }

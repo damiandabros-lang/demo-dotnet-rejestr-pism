@@ -62,6 +62,8 @@ using (var scope = app.Services.CreateScope())
 
 app.UseForwardedHeaders();
 if (!app.Environment.IsDevelopment()) app.UseExceptionHandler("/Error");
+// Strony błędów (np. 404) z pełnym układem: tytuł, lang, nawigacja. API zwraca same kody.
+app.UseWhen(c => !c.Request.Path.StartsWithSegments("/api"), b => b.UseStatusCodePagesWithReExecute("/Error", "?kod={0}"));
 app.Use(async (ctx, next) =>
 {
     ctx.Response.Headers["X-Content-Type-Options"] = "nosniff";
