@@ -14,7 +14,7 @@ Prosty „EZD-lite”: rejestr pism przychodzących i wychodzących dla urzędu.
 - interfejs projektowany pod WCAG 2.1 AA (skip link, fokus, etykiety, podsumowanie błędów, dostępne tabele).
 
 ## Technologia
-C# 12, .NET 8, ASP.NET Core (Razor Pages + Minimal API), Entity Framework Core 8 z migracjami, Microsoft SQL Server 2022 (Express), SQLite tylko do uruchomień deweloperskich i testów, xUnit + `WebApplicationFactory` (9 testów integracyjnych), Docker (testy uruchamiane w trakcie budowania obrazu), Docker Compose / Coolify.
+C# 12, .NET 8, ASP.NET Core (Razor Pages + Minimal API), Entity Framework Core 8 z migracjami, Microsoft SQL Server 2022 (Express), SQLite tylko do uruchomień deweloperskich i testów, xUnit + `WebApplicationFactory` (11 testów integracyjnych), Docker (testy uruchamiane w trakcie budowania obrazu), Docker Compose / Coolify.
 
 ## Uruchomienie
 ```bash
